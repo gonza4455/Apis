@@ -51,7 +51,7 @@ def eliminar_usuario(mail):
         conn.commit()
         return jsonify({'Mensaje':'Se ha eliminado con éxito'})
     except Exception as ex:
-        return jsonify({'Mensaje':'Error'})
+        return jsonify({'Mensaje':f'Error{ex}'})
 @app.route("/Conecto/<mail>",methods=['PUT'])
 def actualizar_usuario(mail):
     try:
@@ -61,7 +61,7 @@ def actualizar_usuario(mail):
         conn.commit()
         return jsonify({'Mensaje':'Se actualizó con éxito'})
     except Exception as ex:
-        return jsonify({'Mensaje':'Error'})
+        return jsonify({'Mensaje':f'Error{ex}'})
 
 def pagina_no_encontrada(error):
     return '<h1>La Pagina no fue encontrada<h1>'
