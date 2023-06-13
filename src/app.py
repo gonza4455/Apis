@@ -1,4 +1,4 @@
-from flask import Flask,jsonify, request
+from  "env\Script\flask" import Flask,jsonify, request
 import pymssql
 app = Flask(__name__)
 conn    = pymssql.connect(
