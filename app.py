@@ -8,6 +8,9 @@ conn    = pymssql.connect(
                 'Laboratorio'
             )
 cursor = conn.cursor()
+@app.route("/")
+def Chequeo():
+    return "Funciona Bien"
 @app.route("/Conecto")
 def listar_usuarios():
     try:
