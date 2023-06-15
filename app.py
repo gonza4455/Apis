@@ -1,18 +1,18 @@
 from  flask import Flask,jsonify, request
 import pymssql
 app = Flask(__name__)
-conn    = pymssql.connect(
-                'jvpdatos.database.windows.net',
-                'jcverni@jvpsa.onmicrosoft.com@jvpdatos',
-                'JVP4455jvp',
-                'Laboratorio'
-            )
-cursor = conn.cursor()
 @app.route("/")
 def Chequeo():
     return "Funciona Bien"
 @app.route("/Conecto")
 def listar_usuarios():
+    conn    = pymssql.connect(
+                'jvpdatos.database.windows.net',
+                'jcverni@jvpsa.onmicrosoft.com@jvpdatos',
+                'JVP4455jvp',
+                'Laboratorio'
+            )
+    cursor = conn.cursor()
     try:
         cursor.execute("SELECT Nombre, Apellido, Organizacion, Password, Mail FROM Usuarios_Generales")
         regUsuarios = cursor.fetchall()
@@ -25,6 +25,13 @@ def listar_usuarios():
         return jsonify({'Mensaje':f'Error {ex}'})
 @app.route("/Conecto/<mail>/<passw>",methods=['GET'])
 def leer_usuario(mail,passw):
+    conn    = pymssql.connect(
+                'jvpdatos.database.windows.net',
+                'jcverni@jvpsa.onmicrosoft.com@jvpdatos',
+                'JVP4455jvp',
+                'Laboratorio'
+            )
+    cursor = conn.cursor()
     try:
         cursor.execute(f"SELECT Nombre, Apellido, Organizacion, Mail, Password FROM Usuarios_Generales WHERE Mail = '{mail}' AND Password ='{passw}'")
         Datos = cursor.fetchone()
@@ -39,6 +46,13 @@ def leer_usuario(mail,passw):
     
 @app.route("/Conecto",methods=['POST'])
 def agregar_usuario():
+    conn    = pymssql.connect(
+                'jvpdatos.database.windows.net',
+                'jcverni@jvpsa.onmicrosoft.com@jvpdatos',
+                'JVP4455jvp',
+                'Laboratorio'
+            )
+    cursor = conn.cursor()
     try:
         cursor.execute(f"""INSERT INTO Usuarios_Generales (Nombre, Apellido, Organizacion, Password, Mail)
         VALUES ('{request.json['Nombre']}', '{request.json['Apellido']}', '{request.json['Organizacion']}', '{request.json['Password']}', '{request.json['Mail']}')
@@ -49,6 +63,13 @@ def agregar_usuario():
         return jsonify({'Mensaje':f'Error{ex}'})
 @app.route("/Conecto/<mail>",methods=['DELETE'])
 def eliminar_usuario(mail):
+    conn    = pymssql.connect(
+                'jvpdatos.database.windows.net',
+                'jcverni@jvpsa.onmicrosoft.com@jvpdatos',
+                'JVP4455jvp',
+                'Laboratorio'
+            )
+    cursor = conn.cursor()
     try:
         cursor.execute(f"DELETE Usuarios_Generales WHERE Mail = '{mail}'")
         conn.commit()
@@ -57,6 +78,13 @@ def eliminar_usuario(mail):
         return jsonify({'Mensaje':f'Error{ex}'})
 @app.route("/Conecto/<mail>",methods=['PUT'])
 def actualizar_usuario(mail):
+    conn    = pymssql.connect(
+                'jvpdatos.database.windows.net',
+                'jcverni@jvpsa.onmicrosoft.com@jvpdatos',
+                'JVP4455jvp',
+                'Laboratorio'
+            )
+    cursor = conn.cursor()
     try:
         cursor.execute(f"""UPDATE Usuarios_Generales 
         SET Nombre = '{request.json['Nombre']}', Apellido = '{request.json['Apellido']}', Organizacion = '{request.json['Organizacion']}' 
